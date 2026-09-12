@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estaque Cafeteria, Doces e Mimos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#EFE4D2;
+    --card:#FBF6EC;
+    --tint:#F5EBD8;
+    --blush:#F3D9DE;
+    --coffee:#3A2A1E;
+    --coffee-soft:#7C6A57;
+    --wine:#8C3B3B;
+    --wine-deep:#6E2C2C;
+    --mustard:#BE8A34;
+    --line:#DCC9A8;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--coffee);
+    font-family:'Quicksand', sans-serif;
+    line-height:1.6;
+  }
+  h1,h2,h3{
+    font-family:'Lora', serif;
+    color:var(--coffee);
+    line-height:1.2;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 28px;
+    border-radius:100px;
+    font-weight:700;
+    font-size:0.95rem;
+    transition:transform .2s, box-shadow .2s;
+    cursor:pointer; border:none; font-family:inherit;
+  }
+  .btn-primary{background:var(--wine); color:#fff;}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 8px 20px rgba(140,59,59,0.35); background:var(--wine-deep);}
+  .btn-ghost{border:1.5px solid var(--coffee); color:var(--coffee); background:transparent;}
+  .btn-ghost:hover{background:var(--coffee); color:#fff;}
+
+  /* HEADER */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(250,243,233,0.9);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:78px;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Lora', serif; font-weight:600; font-size:1.15rem;}
+  .brand .dot{width:9px; height:9px; border-radius:50%; background:var(--wine);}
+  .navlinks{display:flex; gap:30px; font-size:0.92rem; color:var(--coffee-soft);}
+  .navlinks a:hover{color:var(--coffee);}
+
+  /* HERO */
+  .hero{
+    position:relative;
+    min-height:88vh;
+    display:flex; align-items:flex-end;
+    background:linear-gradient(180deg, rgba(74,46,34,0.15) 0%, rgba(74,46,34,0.78) 100%),
+      url('https://lh3.googleusercontent.com/place-photos/AG9NLjBQchIy2hlIAJCrttNjPldIK1vHT_q3SVJJ2t-1mUOJ3B2XgD1BeXqF-TtnRN52M2zY8cqV-uuyByiaz0G6DGXb6EV9OdZq60ENUk-6SNf2GRC5T1-4s_Wr7UvzPkhFbwHDpadq5r_Eu8RnpDhU2ej8KA=s1600');
+    background-size:cover;
+    background-position:center;
+  }
+  .hero-content{
+    padding:80px 0 64px;
+    max-width:640px;
+  }
+  .hero .eyebrow{color:var(--blush); font-weight:700; letter-spacing:0.02em; margin-bottom:14px;}
+  .hero h1{
+    color:#fff;
+    font-size:clamp(2.2rem, 4.4vw, 3.4rem);
+    font-style:italic;
+    margin-bottom:20px;
+  }
+  .hero p{color:#F3E9DF; font-size:1.08rem; max-width:480px; margin-bottom:30px;}
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+  .hero-ctas .btn-ghost{border-color:#fff; color:#fff;}
+  .hero-ctas .btn-ghost:hover{background:#fff; color:var(--coffee);}
+
+  /* SECTION GENERIC */
+  .section{padding:96px 0;}
+  .eyebrow{
+    display:inline-block; font-size:0.82rem; font-weight:700;
+    color:var(--mustard); margin-bottom:14px;
+  }
+  .section h2{font-size:clamp(1.8rem, 3vw, 2.3rem); margin-bottom:18px;}
+
+  /* MOLDURA / PLACEHOLDER DE IMAGEM */
+  .img-placeholder{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:10px;
+    background:repeating-linear-gradient(135deg, var(--card), var(--card) 12px, var(--tint) 12px, var(--tint) 24px);
+    border:2px dashed var(--line);
+    color:var(--coffee-soft);
+  }
+  .img-placeholder svg{opacity:0.5; width:32px; height:32px; flex-shrink:0;}
+  .img-placeholder span{font-family:'Lora', serif; font-style:italic; font-size:0.9rem;}
+
+  /* SOBRE */
+  .about-grid{
+    display:grid; grid-template-columns:0.9fr 1.1fr; gap:64px; align-items:center;
+  }
+  .about-photo{
+    border-radius:24px; overflow:hidden; aspect-ratio:4/5;
+  }
+  .about-photo img{width:100%; height:100%; object-fit:cover;}
+  .about-text p{color:var(--coffee-soft); font-size:1.02rem; max-width:480px;}
+
+  /* CARDAPIO */
+  .section-blush{background:var(--tint);}
+  .tabs{display:flex; gap:10px; margin-bottom:40px; flex-wrap:wrap;}
+  .tab-btn{
+    padding:10px 22px; border-radius:100px; font-weight:600; font-size:0.9rem;
+    background:#fff; color:var(--coffee-soft); border:1px solid var(--line);
+    cursor:pointer; transition:all .2s; font-family:inherit;
+  }
+  .tab-btn.active{background:var(--coffee); color:#fff; border-color:var(--coffee);}
+  .menu-panel{display:none;}
+  .menu-panel.active{display:grid; grid-template-columns:repeat(2, 1fr); gap:28px;}
+  .menu-item{
+    background:var(--card); border-radius:18px; overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .menu-item .thumb{aspect-ratio:16/10; border-radius:0;}
+  .menu-item .thumb span{font-size:0.8rem;}
+  .menu-item .info{padding:16px 18px 18px; display:flex; flex-direction:column; gap:14px;}
+  .menu-item .info-top{display:flex; justify-content:space-between; gap:14px; align-items:flex-start;}
+  .menu-item h4{font-family:'Lora', serif; font-size:1.02rem; font-weight:500;}
+  .menu-item .desc{font-size:0.85rem; color:var(--coffee-soft); margin-top:2px;}
+  .menu-item .price{font-weight:700; white-space:nowrap; color:var(--wine-deep);}
+  .info-actions{display:flex; gap:8px;}
+  .btn-sm, .btn-sm-outline{
+    flex:1; text-align:center; padding:9px 8px; border-radius:100px;
+    font-size:0.78rem; font-weight:700; cursor:pointer; border:none;
+    transition:all .2s; font-family:inherit;
+  }
+  .btn-sm{background:var(--wine); color:#fff;}
+  .btn-sm:hover{background:var(--wine-deep);}
+  .btn-sm-outline{background:transparent; border:1.5px solid var(--line); color:var(--coffee);}
+  .btn-sm-outline:hover{border-color:var(--coffee);}
+
+  /* COMO PEDIR */
+  .steps{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:32px;
+    position:relative;
+  }
+  .step{
+    background:var(--card); border-radius:20px; padding:32px 26px;
+    border:1px solid var(--line);
+  }
+  .step .num{
+    font-family:'Lora', serif; font-style:italic; font-size:1.6rem;
+    color:var(--mustard); margin-bottom:14px; display:block;
+  }
+  .step h3{font-size:1.02rem; margin-bottom:8px;}
+  .step p{color:var(--coffee-soft); font-size:0.94rem;}
+  .step-cta{text-align:center; margin-top:44px;}
+
+  /* DIFERENCIAIS */
+  .diff-row{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;
+  }
+  .diff-item{
+    background:var(--card); border-radius:20px; overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .diff-item .thumb{aspect-ratio:4/3; border-radius:0;}
+  .diff-item .diff-body{padding:22px 22px 26px;}
+  .diff-item h3{font-size:1rem; font-weight:600; font-family:'Quicksand',sans-serif; margin-bottom:6px;}
+  .diff-item p{font-size:0.86rem; color:var(--coffee-soft);}
+
+  /* FOOTER */
+  footer{background:var(--coffee); color:#F3E9DF; padding:64px 0 32px;}
+  .footer-grid{display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:44px; margin-bottom:44px;}
+  footer h4{font-size:0.8rem; text-transform:uppercase; letter-spacing:0.08em; color:#D9A857; margin-bottom:16px;}
+  footer p, footer a{font-size:0.92rem; margin-bottom:8px; display:block; color:#F3E9DF;}
+  footer a:hover{color:#D9A857;}
+  .footer-bottom{
+    border-top:1px solid rgba(255,255,255,0.15); padding-top:22px;
+    font-size:0.78rem; color:#C9B7A9;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+
+  .wa-float{
+    position:fixed; bottom:26px; right:26px; z-index:60;
+    width:58px; height:58px; border-radius:50%;
+    background:var(--wine);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 18px rgba(0,0,0,0.25);
+    transition:transform .2s;
+  }
+  .wa-float:hover{transform:scale(1.06);}
+
+  /* CARRINHO FLUTUANTE */
+  .cart-float{
+    position:fixed; bottom:26px; left:26px; z-index:60;
+    width:58px; height:58px; border-radius:50%;
+    background:var(--mustard);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 18px rgba(0,0,0,0.25);
+    transition:transform .2s;
+    border:none; cursor:pointer;
+  }
+  .cart-float:hover{transform:scale(1.06);}
+  .cart-badge{
+    position:absolute; top:-4px; right:-4px;
+    background:var(--wine); color:#fff; font-size:0.7rem; font-weight:700;
+    width:20px; height:20px; border-radius:50%;
+    display:none; align-items:center; justify-content:center;
+  }
+
+  /* MODAL DO CARRINHO */
+  .cart-overlay{
+    position:fixed; inset:0; background:rgba(20,14,8,0.5);
+    display:none; align-items:flex-end; justify-content:center; z-index:100;
+  }
+  .cart-overlay.open{display:flex;}
+  .cart-panel{
+    background:var(--card); width:100%; max-width:480px;
+    border-radius:24px 24px 0 0; max-height:82vh;
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  .cart-header{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px 22px; border-bottom:1px solid var(--line);
+  }
+  .cart-header h3{font-size:1.1rem;}
+  .cart-close{
+    background:none; border:none; font-size:1.4rem; color:var(--coffee-soft);
+    cursor:pointer; line-height:1; padding:4px 8px;
+  }
+  .cart-items{flex:1; overflow-y:auto; padding:8px 22px;}
+  .cart-empty{text-align:center; color:var(--coffee-soft); padding:40px 0; font-style:italic; font-family:'Lora',serif;}
+  .cart-row{
+    display:flex; align-items:center; gap:12px;
+    padding:14px 0; border-bottom:1px solid var(--line);
+  }
+  .cart-row-info{flex:1; min-width:0;}
+  .cart-row-info h4{font-family:'Lora', serif; font-size:0.96rem; font-weight:500;}
+  .cart-row-price{font-size:0.82rem; color:var(--coffee-soft);}
+  .cart-row-qty{
+    display:flex; align-items:center; gap:8px;
+    background:var(--tint); border-radius:100px; padding:4px 6px;
+  }
+  .cart-row-qty button{
+    width:24px; height:24px; border-radius:50%; border:none;
+    background:#fff; color:var(--coffee); font-weight:700; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; font-size:0.95rem;
+  }
+  .cart-row-qty span{font-size:0.88rem; font-weight:600; min-width:14px; text-align:center;}
+  .cart-row-trash{
+    background:none; border:none; color:var(--wine-deep); cursor:pointer;
+    padding:6px; flex-shrink:0;
+  }
+  .cart-footer{padding:18px 22px 24px; border-top:1px solid var(--line);}
+  .cart-total{display:flex; justify-content:space-between; font-weight:700; margin-bottom:14px; font-size:1.05rem;}
+  .cart-total span{color:var(--wine-deep);}
+
+  @media (min-width:640px){
+    .cart-overlay{align-items:center;}
+    .cart-panel{border-radius:24px;}
+  }
+
+  @media (max-width: 860px){
+    .navlinks{display:none;}
+    .about-grid{grid-template-columns:1fr;}
+    .menu-panel.active{grid-template-columns:1fr;}
+    .steps{grid-template-columns:1fr;}
+    .diff-row{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="brand"><span class="dot"></span>Estaque <em style="font-style:italic; color:var(--coffee-soft); font-weight:400;">Cafeteria</em></div>
+    <div class="navlinks">
+      <a href="#sobre">Sobre Nós</a>
+      <a href="#cardapio">Cardápio</a>
+      <a href="#pedir">Como Pedir</a>
+      <a href="#contato">Contato</a>
+    </div>
+    <a href="#cardapio" class="btn btn-primary">🛵 Peça seu Delivery</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-content">
+    <div class="eyebrow">Naviraí · MS</div>
+    <h1>Um refúgio de sabor e aconchego no coração de Naviraí.</h1>
+    <p>Na Estaque, cada café é passado na hora e cada doce carrega o carinho que o seu dia merece. Venha viver esse momento ou peça direto na sua casa.</p>
+    <div class="hero-ctas">
+      <a href="#cardapio" class="btn btn-primary">🛵 Peça seu Delivery</a>
+      <a href="#cardapio" class="btn btn-ghost">Ver cardápio</a>
+    </div>
+  </div>
+</section>
+
+<section id="sobre" class="section">
+  <div class="wrap about-grid">
+    <div class="about-photo img-placeholder">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-4-4 3-3-2-6 5"/></svg>
+      <span>Imagem em breve</span>
+    </div>
+    <div class="about-text">
+      <div class="eyebrow">Sobre Nós</div>
+      <h2>Mais que uma cafeteria, o seu momento de pausa.</h2>
+      <p>A Cafeteria Estaque Doces e Mimos nasceu do desejo de criar um espaço onde o tempo corre mais devagar. Combinamos grãos de café selecionados, confeitaria artesanal e um ambiente moderno e acolhedor, perfeito para ler um bom livro, focar no trabalho remoto ou compartilhar risadas com os amigos e a família. Queremos que cada visita seja um mimo para a sua rotina.</p>
+    </div>
+  </div>
+</section>
+
+<section id="cardapio" class="section section-blush">
+  <div class="wrap">
+    <div class="eyebrow">Cardápio</div>
+    <h2>Nossos destaques</h2>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="cafes">Cafés e Chás</button>
+      <button class="tab-btn" data-tab="refeicoes">Refeições Rápidas</button>
+      <button class="tab-btn" data-tab="doces">Doces e Sobremesas</button>
+    </div>
+
+    <div class="menu-panel active" id="cafes">
+      <div class="menu-item">
+        <div class="thumb img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-4-4 3-3-2-6 5"/></svg><span>Imagem em breve</span></div>
+        <div class="info">
+          <div class="info-top"><div><h4>Café coado</h4><div class="desc">Grãos selecionados, passado na hora</div></div><span class="price">R$ 8</span></div>
+          <div class="info-actions">
+            <button class="btn-sm-outline" onclick="buyNow('cafe-coado','Café coado',8)">Comprar</button>
+            <button class="btn-sm" onclick="addToCart('cafe-coado','Café coado',8)">+ Carrinho</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="thumb img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-4-4 3-3-2-6 5"/></svg><span>Imagem em breve</span></div>
+        <div class="info">
+          <div class="info-top"><div><h4>Cappuccino</h4><div class="desc">Cremoso, com leite vaporizado</div></div><span class="price">R$ 12</span></div>
+          <div class="info-actions">
+            <button class="btn-sm-outline" onclick="buyNow('cappuccino','Cappuccino',12)">Comprar</button>
+            <button class="btn-sm" onclick="addToCart('cappuccino','Cappuccino',12)">+ Carrinho</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="thumb img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-4-4 3-3-2-6 5"/></svg><span>Imagem em breve</span></div>
+        <div class="info">
+          <div class="info-top"><div><h4>Chá gelado artesanal</h4><div class="desc">Sabores da estação</div></div><span class="price">R$ 10</span></div>
+          <div class="info-actions">
+            <button class="btn-sm-outline" onclick="buyNow('cha-gelado','Chá gelado artesanal',10)">Comprar</button>
+            <button class="btn-sm" onclick="addToCart('cha-gelado','Chá gelado artesanal',10)">+ Carrinho</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="thumb img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-4-4 3-3-2-6 5"/></svg><span>Imagem em breve</span></div>
+        <div class="info">
+          <div class="info-top"><div><h4>Mocha</h4><div class="desc">Café, chocolate e chantilly</div></div><span class="price">R$ 14</span></div>
+          <div class="info-actions">
+            <button class="btn-sm-outline" onclick="buyNow('mocha','Mocha',14)">Comprar</button>
+            <button class="btn-sm" onclick="addToCart('mocha','Mocha',14)">+ Carrinho</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-panel" id="refeicoes">
+      <div class="menu-item">
+        <div class="thumb img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-4-4 3-3-2-6 5"/></svg><span>Imagem em breve</span></div>
+        <div class="info">
+          <div class="info-top"><div><h4>Sanduíche natural</h4><div class="desc">Pão integral, recheio do dia</div></div><span class="price">R$ 16</span></div>
+          <div class="info-actions">
+            <button class="btn-sm-outline" onclick="buyNow('sanduiche','Sanduíche natural',16)">Comprar</button>
+            <button class="btn-sm" onclick="addToCart('sanduiche','Sanduíche natural',16)">+ Carrinho</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="thumb img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-4-4 3-3-2-6 5"/></svg><span>Imagem em breve</span></div>
+        <div class="info">
+          <div class="info-top"><div><h4>Torta salgada</h4><div class="desc">Fatia generosa, receita da casa</div></div><span class="price">R$ 14</span></div>
+          <div class="info-actions">
+            <button class="btn-sm-outline" onclick="buyNow('torta-salgada','Torta salgada',14)">Comprar</button>
+            <button class="btn-sm" onclick="addToCart('torta-salgada','Torta salgada',14)">+ Carrinho</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="thumb img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-4-4 3-3-2-6 5"/></svg><span>Imagem em breve</span></div>
+        <div class="info">
+          <div class="info-top"><div><h4>Croissant recheado</h4><div class="desc">Presunto e queijo ou opção doce</div></div><span class="price">R$ 15</span></div>
+          <div class="info-actions">
+            <button class="btn-sm-outline" onclick="buyNow('croissant','Croissant recheado',15)">Comprar</button>
+            <button class="btn-sm" onclick="addToCart('croissant','Croissant recheado',15)">+ Carrinho</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="thumb img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-4-4 3-3-2-6 5"/></svg><span>Imagem em breve</span></div>
+        <div class="info">
+          <div class="info-top"><div><h4>Salada do chef</h4><div class="desc">Leve e fresca, ótima pro dia a dia</div></div><span class="price">R$ 18</span></div>
+          <div class="info-actions">
+            <button class="btn-sm-outline" onclick="buyNow('salada','Salada do chef',18)">Comprar</button>
+            <button class="btn-sm" onclick="addToCart('salada','Salada do chef',18)">+ Carrinho</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-panel" id="doces">
+      <div class="menu-item">
+        <div class="thumb img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-4-4 3-3-2-6 5"/></svg><span>Imagem em breve</span></div>
+        <div class="info">
+          <div class="info-top"><div><h4>Bolo do dia</h4><div class="desc">Fatia fresquinha, sabor rotativo</div></div><span class="price">R$ 12</span></div>
+          <div class="info-actions">
+            <button class="btn-sm-outline" onclick="buyNow('bolo-do-dia','Bolo do dia',12)">Comprar</button>
+            <button class="btn-sm" onclick="addToCart('bolo-do-dia','Bolo do dia',12)">+ Carrinho</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="thumb img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-4-4 3-3-2-6 5"/></svg><span>Imagem em breve</span></div>
+        <div class="info">
+          <div class="info-top"><div><h4>Brownie com sorvete</h4><div class="desc">Quentinho, na medida certa</div></div><span class="price">R$ 16</span></div>
+          <div class="info-actions">
+            <button class="btn-sm-outline" onclick="buyNow('brownie','Brownie com sorvete',16)">Comprar</button>
+            <button class="btn-sm" onclick="addToCart('brownie','Brownie com sorvete',16)">+ Carrinho</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="thumb img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-4-4 3-3-2-6 5"/></svg><span>Imagem em breve</span></div>
+        <div class="info">
+          <div class="info-top"><div><h4>Cheesecake</h4><div class="desc">Calda de frutas vermelhas</div></div><span class="price">R$ 15</span></div>
+          <div class="info-actions">
+            <button class="btn-sm-outline" onclick="buyNow('cheesecake','Cheesecake',15)">Comprar</button>
+            <button class="btn-sm" onclick="addToCart('cheesecake','Cheesecake',15)">+ Carrinho</button>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="thumb img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-4-4 3-3-2-6 5"/></svg><span>Imagem em breve</span></div>
+        <div class="info">
+          <div class="info-top"><div><h4>Docinhos gourmet</h4><div class="desc">Caixa com 6 unidades</div></div><span class="price">R$ 20</span></div>
+          <div class="info-actions">
+            <button class="btn-sm-outline" onclick="buyNow('docinhos','Docinhos gourmet',20)">Comprar</button>
+            <button class="btn-sm" onclick="addToCart('docinhos','Docinhos gourmet',20)">+ Carrinho</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pedir" class="section">
+  <div class="wrap">
+    <div class="eyebrow">Delivery</div>
+    <h2>Como pedir</h2>
+    <div class="steps">
+      <div class="step">
+        <span class="num">01</span>
+        <h3>Escolha no cardápio</h3>
+        <p>Clique em "Comprar" para pedir só aquele item na hora, ou em "+ Carrinho" para juntar mais produtos no mesmo pedido.</p>
+      </div>
+      <div class="step">
+        <span class="num">02</span>
+        <h3>Monte seu pedido</h3>
+        <p>No carrinho, ajuste a quantidade com os botões + e −, ou remova um item clicando na lixeira.</p>
+      </div>
+      <div class="step">
+        <span class="num">03</span>
+        <h3>Envie pelo WhatsApp</h3>
+        <p>Clique em "Pedir" e você será direcionado ao WhatsApp com a lista completa do pedido, pronta para confirmar com a gente.</p>
+      </div>
+    </div>
+    <div class="step-cta">
+      <a href="#cardapio" class="btn btn-primary">🛵 Peça seu Delivery agora</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section-blush">
+  <div class="wrap">
+    <div class="eyebrow">Diferenciais</div>
+    <h2>Feito pra ficar</h2>
+    <div class="diff-row">
+      <div class="diff-item">
+        <div class="thumb img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-4-4 3-3-2-6 5"/></svg><span>Imagem em breve</span></div>
+        <div class="diff-body">
+          <h3>Espaço kids</h3>
+          <p>Um cantinho pensado pra quem vem com a família toda.</p>
+        </div>
+      </div>
+      <div class="diff-item">
+        <div class="thumb img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-4-4 3-3-2-6 5"/></svg><span>Imagem em breve</span></div>
+        <div class="diff-body">
+          <h3>Wi-Fi para home office</h3>
+          <p>Trabalhe com conforto, cercado de bom café.</p>
+        </div>
+      </div>
+      <div class="diff-item">
+        <div class="thumb img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 15l-5-4-4 3-3-2-6 5"/></svg><span>Imagem em breve</span></div>
+        <div class="diff-body">
+          <h3>Estacionamento gratuito</h3>
+          <p>Chegue tranquilo, sem se preocupar com o carro.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contato">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4>Estaque Cafeteria, Doces e Mimos</h4>
+        <p>Av. João Paulo II, 869 - Jardim Progresso<br>Naviraí - MS, 79949-572</p>
+        <a href="https://maps.google.com/?cid=7014804193437779851" target="_blank">Ver no Google Maps →</a>
+      </div>
+      <div>
+        <h4>Horário</h4>
+        <p>Seg a Sex: 08h–11h · 13h–18h</p>
+        <p>Sábado: 08h–11h</p>
+        <p>Domingo: Fechado</p>
+      </div>
+      <div>
+        <h4>Fale com a gente</h4>
+        <a href="https://wa.me/message/XPGJTND5CGASG1">WhatsApp</a>
+        <a href="https://instagram.com/estaque_cafeteria_doces_mimos" target="_blank">@estaque_cafeteria_doces_mimos</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Site demonstrativo — desenvolvido por Weblace</span>
+      <span>weblacesites@gmail.com</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/message/XPGJTND5CGASG1" class="wa-float" aria-label="WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M17.6 6.3A8 8 0 0 0 4.3 15.9L3 21l5.2-1.4A8 8 0 1 0 17.6 6.3zM12 18.4a6.4 6.4 0 0 1-3.3-.9l-.2-.1-2.5.7.7-2.4-.2-.2A6.4 6.4 0 1 1 12 18.4zm3.5-4.8c-.2-.1-1.2-.6-1.3-.7-.2-.1-.3-.1-.4.1s-.5.7-.6.8-.2.1-.4 0a5.2 5.2 0 0 1-1.5-1 5.7 5.7 0 0 1-1-1.3c-.1-.2 0-.3.1-.4l.3-.3c.1-.1.1-.2.2-.3a.4.4 0 0 0 0-.4c0-.1-.4-1-.6-1.4s-.3-.3-.4-.3h-.4a.7.7 0 0 0-.5.2 2.2 2.2 0 0 0-.7 1.6 3.8 3.8 0 0 0 .8 2 8.7 8.7 0 0 0 3.3 3c.5.2.8.3 1.1.4a2.6 2.6 0 0 0 1.2.1 2 2 0 0 0 1.3-.9 1.6 1.6 0 0 0 .1-.9c-.1-.1-.2-.1-.4-.2z"/></svg>
+</a>
+
+<button class="cart-float" id="cartFloatBtn" onclick="openCart()" aria-label="Ver carrinho">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.5 3h2l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21.5 8H6"/></svg>
+  <span class="cart-badge" id="cartBadge">0</span>
+</button>
+
+<div class="cart-overlay" id="cartOverlay" onclick="if(event.target===this) closeCart()">
+  <div class="cart-panel">
+    <div class="cart-header">
+      <h3>Seu carrinho</h3>
+      <button class="cart-close" onclick="closeCart()" aria-label="Fechar">×</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <p class="cart-empty">Seu carrinho está vazio.</p>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">Total <span id="cartTotal">R$ 0,00</span></div>
+      <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="sendCartOrder()">Pedir</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  const WHATSAPP_LINK = 'https://wa.me/message/XPGJTND5CGASG1';
+  const cart = {};
+
+  function money(v){ return 'R$ ' + v.toFixed(2).replace('.', ','); }
+
+  function buyNow(id, name, price){
+    const msg = 'Olá! Quero pedir 1x ' + name + ' - ' + money(price);
+    window.open(WHATSAPP_LINK + '?text=' + encodeURIComponent(msg), '_blank');
+  }
+
+  function addToCart(id, name, price){
+    if(cart[id]){ cart[id].qty += 1; }
+    else{ cart[id] = {name: name, price: price, qty: 1}; }
+    renderCart();
+  }
+
+  function changeQty(id, delta){
+    if(!cart[id]) return;
+    cart[id].qty += delta;
+    if(cart[id].qty <= 0){ delete cart[id]; }
+    renderCart();
+  }
+
+  function removeFromCart(id){
+    if(!cart[id]) return;
+    const ok = confirm('Remover "' + cart[id].name + '" do carrinho?');
+    if(ok){ delete cart[id]; renderCart(); }
+  }
+
+  function renderCart(){
+    const container = document.getElementById('cartItems');
+    const ids = Object.keys(cart);
+    let total = 0;
+    let count = 0;
+
+    if(ids.length === 0){
+      container.innerHTML = '<p class="cart-empty">Seu carrinho está vazio.</p>';
+    } else {
+      container.innerHTML = ids.map(function(id){
+        const item = cart[id];
+        total += item.price * item.qty;
+        count += item.qty;
+        return '<div class="cart-row">' +
+          '<div class="cart-row-info"><h4>' + item.name + '</h4><span class="cart-row-price">' + money(item.price) + '</span></div>' +
+          '<div class="cart-row-qty">' +
+            '<button onclick="changeQty(\'' + id + '\',-1)" aria-label="Diminuir">−</button>' +
+            '<span>' + item.qty + '</span>' +
+            '<button onclick="changeQty(\'' + id + '\',1)" aria-label="Aumentar">+</button>' +
+          '</div>' +
+          '<button class="cart-row-trash" onclick="removeFromCart(\'' + id + '\')" aria-label="Remover">' +
+            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m-8 0v12a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V7"/></svg>' +
+          '</button>' +
+        '</div>';
+      }).join('');
+    }
+
+    document.getElementById('cartTotal').textContent = money(total);
+    const badge = document.getElementById('cartBadge');
+    if(count > 0){ badge.style.display = 'flex'; badge.textContent = count; }
+    else{ badge.style.display = 'none'; }
+  }
+
+  function openCart(){ document.getElementById('cartOverlay').classList.add('open'); }
+  function closeCart(){ document.getElementById('cartOverlay').classList.remove('open'); }
+
+  function sendCartOrder(){
+    const ids = Object.keys(cart);
+    if(ids.length === 0){ return; }
+    let total = 0;
+    const lines = ids.map(function(id){
+      const item = cart[id];
+      total += item.price * item.qty;
+      return item.qty + 'x ' + item.name + ' - ' + money(item.price * item.qty);
+    });
+    const msg = 'Olá! Quero fazer o seguinte pedido:\n' + lines.join('\n') + '\nTotal: ' + money(total);
+    window.open(WHATSAPP_LINK + '?text=' + encodeURIComponent(msg), '_blank');
+  }
+</script>
+
+</body>
+</html>
