@@ -271,6 +271,13 @@
   .cart-total{display:flex; justify-content:space-between; font-weight:700; margin-bottom:14px; font-size:1.05rem;}
   .cart-total span{color:var(--wine-deep);}
 
+  .nav-cart-btn{
+    display:none; position:relative;
+    background:var(--mustard); border:none; border-radius:50%;
+    width:44px; height:44px; align-items:center; justify-content:center;
+    cursor:pointer; flex-shrink:0;
+  }
+
   @media (min-width:640px){
     .cart-overlay{align-items:center;}
     .cart-panel{border-radius:24px;}
@@ -283,6 +290,21 @@
     .steps{grid-template-columns:1fr;}
     .diff-row{grid-template-columns:1fr;}
     .footer-grid{grid-template-columns:1fr;}
+
+    /* header: troca o CTA de delivery pelo ícone de carrinho */
+    .nav-cta{display:none;}
+    .nav-cart-btn{display:flex;}
+
+    /* carrinho flutuante some do mobile, já está no header */
+    .cart-float{display:none;}
+
+    /* hero: centralizar e reduzir texto, remover CTA duplicado */
+    .hero-content{text-align:center; padding:64px 0 48px;}
+    .hero .eyebrow{font-size:0.8rem;}
+    .hero h1{font-size:1.7rem; margin-bottom:14px;}
+    .hero p{font-size:0.96rem; margin-left:auto; margin-right:auto; margin-bottom:22px;}
+    .hero-ctas{justify-content:center;}
+    .hero-cta-delivery{display:none;}
   }
 </style>
 </head>
@@ -297,7 +319,11 @@
       <a href="#pedir">Como Pedir</a>
       <a href="#contato">Contato</a>
     </div>
-    <a href="#cardapio" class="btn btn-primary">🛵 Peça seu Delivery</a>
+    <a href="#cardapio" class="btn btn-primary nav-cta">🛵 Peça seu Delivery</a>
+    <button class="nav-cart-btn" onclick="openCart()" aria-label="Ver carrinho">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.5 3h2l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L21.5 8H6"/></svg>
+      <span class="cart-badge" id="cartBadgeNav">0</span>
+    </button>
   </nav>
 </header>
 
@@ -307,7 +333,7 @@
     <h1>Um refúgio de sabor e aconchego no coração de Naviraí.</h1>
     <p>Na Estaque, cada café é passado na hora e cada doce carrega o carinho que o seu dia merece. Venha viver esse momento ou peça direto na sua casa.</p>
     <div class="hero-ctas">
-      <a href="#cardapio" class="btn btn-primary">🛵 Peça seu Delivery</a>
+      <a href="#cardapio" class="btn btn-primary hero-cta-delivery">🛵 Peça seu Delivery</a>
       <a href="#cardapio" class="btn btn-ghost">Ver cardápio</a>
     </div>
   </div>
@@ -587,7 +613,7 @@
     });
   });
 
-  const WHATSAPP_LINK = 'https://wa.me/message/XPGJTND5CGASG1';
+  const WHATSAPP_LINK = 'https://wa.me/556798805829';
   const cart = {};
 
   function money(v){ return 'R$ ' + v.toFixed(2).replace('.', ','); }
@@ -645,8 +671,12 @@
 
     document.getElementById('cartTotal').textContent = money(total);
     const badge = document.getElementById('cartBadge');
-    if(count > 0){ badge.style.display = 'flex'; badge.textContent = count; }
-    else{ badge.style.display = 'none'; }
+    const badgeNav = document.getElementById('cartBadgeNav');
+    [badge, badgeNav].forEach(function(b){
+      if(!b) return;
+      if(count > 0){ b.style.display = 'flex'; b.textContent = count; }
+      else{ b.style.display = 'none'; }
+    });
   }
 
   function openCart(){ document.getElementById('cartOverlay').classList.add('open'); }
